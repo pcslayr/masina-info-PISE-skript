@@ -1,0 +1,53 @@
+#Kasutusõpetus:
+#Skripti käivitamisel saad näha, kuidas iga funktsioon töötab oma sisendi ja väljundi puhul.
+#Näited käivitavad funktsioonid ja kuvavad tulemused otse ekraanil.
+
+# Funktsioon 1: Arvutab ringi pindala etteantud raadiuse järgi
+function Calculate-CircleArea {
+    param (
+        [Parameter(Mandatory=$true)]
+        [double]$raadius
+    )
+    
+    $pi = [math]::PI
+    $pindala = $pi * $raadius * $raadius
+    Write-Host "Ringi pindala raadiusega $raadius on: $([math]::round($pindala, 2))"
+}
+
+# Abitekst Funktsioon 1 kohta
+Write-Host "Funktsioon 1: Calculate-CircleArea"
+Write-Host "Kasutamine: Funktsioon võtab sisendiks raadiuse ja arvutab ringi pindala."
+Write-Host "Näide kasutamisest: Calculate-CircleArea -raadius 5"
+Write-Host "*******************"
+
+# Funktsioon 2: Puhastab inimese täisnime ülearustest tühikutest ja täpitähtedest ning teeb esitähed suurteks
+function Clean-PersonName {
+    param (
+        [Parameter(Mandatory=$true)]
+        [string]$fullName
+    )
+
+    # Puhastame nime ülearustest tühikutest ja täpitähtedest
+    $cleanedName = $fullName.Trim()
+    $cleanedName = $cleanedName -replace '[^\w\s]', ''  # Eemaldame kõik mitte tähed ja tühikud
+    $cleanedName = $cleanedName -replace '\s+', ' '  # Asendame mitmed tühikud ühe tühikuga
+
+    # Teeme esitähed suurteks
+    $cleanedName = $cleanedName -replace '\b(\w)', { $args[0].Value.ToUpper() }
+
+    Write-Host "Puhastatud nimi: $cleanedName"
+}
+
+# Abitekst Funktsioon 2 kohta
+Write-Host "Funktsioon 2: Clean-PersonName"
+Write-Host "Kasutamine: Funktsioon puhastab inimese täisnime ülearustest tühikutest ja täpitähtedest."
+Write-Host "Näide kasutamisest: Clean-PersonName -fullName ' jOhn dOe  '"
+Write-Host "*******************"
+
+# Näidete käivitamine
+
+# Funktsioon 1: Arvutame ringi pindala raadiusega 5
+Calculate-CircleArea -raadius 5
+
+# Funktsioon 2: Puhastame nime '  jOhn dOe  '
+Clean-PersonName -fullName '  jOhn dOe  '
