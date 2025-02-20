@@ -1,0 +1,41 @@
+# Loeme sisendfaili users.csv
+$users = Import-Csv -Path "users.csv"
+
+# Funktsioon, mis genereerib parooli (kolm tähte perenimest + kaks numbrit)
+function Generate-Password {
+    param (
+        [string]$lastName
+    )
+    
+    # Võtame esimesed kolm tähte perenimest ja lisame kaks juhuslikku numbrit
+    $password = $lastName.Substring(0, 3).ToLower() + (Get-Random -Minimum 10 -Maximum 100)
+    return $password
+}
+
+# Loodame uue listi kasutajatest koos täiendatud veergudega
+$newUsers = $users | ForEach-Object {
+    $firstName = $_.Eesnimi
+    $lastName = $_.Perenimi
+
+    # Loome kasutajanime (eesnime esimene täht + perenimi)
+    $username = ($firstName.Substring(0, 1) + $lastName).ToLower()
+
+    # Loome e-posti aadressi
+    $email = "$($firstName.ToLower()).$($lastName.ToLower())@hkhk.edu.ee"
+
+    # Loome parooli
+    $password = Generate-Password -lastName $lastName
+
+    # Lisame kõik uued veerud ja tagastame
+    [PSCustomObject]@{
+        nimi         = "$firstName $lastName"
+        kasutajanimi = $username
+        email        = $email
+        parool       = $password
+    }
+}
+
+# Salvestame uue andmete faili
+$newUsers | Export-Csv -Path "users_with_data.csv" -NoTypeInformation
+
+Write-Host "Uued andmed on salvestatud faili users_with_data.csv"
