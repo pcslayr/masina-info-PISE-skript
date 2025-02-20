@@ -1,0 +1,41 @@
+# Kevin ITSp24
+
+# Puhastame ekraani
+Clear-Host
+
+# Masina nimi
+$HostName = (Get-WmiObject -Class Win32_ComputerSystem).Name
+Write-Host "Masina nimi: $HostName"
+Write-Host "*******************"
+
+# Operatsioonisüsteem
+$OSName = (Get-WmiObject -Class Win32_OperatingSystem).Caption
+Write-Host "Operatsioonisüsteem: $OSName"
+Write-Host "*******************"
+
+# IP aadress
+$IPAddresses = (Get-WmiObject -Class Win32_NetworkAdapterConfiguration | Where-Object {$_.IPEnabled -eq $true}).IPAddress
+$IP = $IPAddresses -join ', '
+Write-Host "IP aadress: $IP"
+Write-Host "*******************"
+
+# Muutmälu suurus
+$RAM = (Get-WmiObject -Class Win32_ComputerSystem).TotalPhysicalMemory
+$RAMGB = [math]::round($RAM / 1GB, 2)
+Write-Host "Muutmälu suurus: $RAMGB GB"
+Write-Host "*******************"
+
+# Protsessori nimi
+$Processor = (Get-WmiObject -Class Win32_Processor).Name
+Write-Host "Protsessori nimi: $Processor"
+Write-Host "*******************"
+
+# Graafikakaardi nimi
+$VideoController = (Get-WmiObject -Class Win32_VideoController).Name
+Write-Host "Graafikakaardi nimi: $VideoController"
+Write-Host "*******************"
+
+# Arvuti kasutajad
+$Users = Get-WmiObject -Class Win32_UserAccount | Where-Object { $_.LocalAccount -eq $true } | Select-Object -ExpandProperty Name
+Write-Host "Arvuti kasutajad: $($Users -join ', ')"
+Write-Host "*******************"
