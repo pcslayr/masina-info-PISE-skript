@@ -1,0 +1,24 @@
+# Arvuti nimi
+$arvutiNimi = (Get-WmiObject -Class Win32_ComputerSystem).Name
+Write-Host "Arvuti nimi: $arvutiNimi"
+Write-Host "*******************"
+
+# Loogiliste ketaste leidmine ja koguarvu kuvamine
+$kettad = Get-WmiObject -Class Win32_LogicalDisk -Filter "DriveType=3"  # DriveType=3 tähendab kõvakettad
+$kettadeKoguarv = $kettad.Count
+Write-Host "Kettade koguarv: $kettadeKoguarv"
+Write-Host "*******************"
+
+# Kettade vaba ruumi protsent ja kontrollimine, kas vaba ruum on alla 50%
+foreach ($kett in $kettad) {
+    $vabaRuumi = [math]::round(($kett.FreeSpace / $kett.Size) * 100, 2)
+    Write-Host "Kett: $($kett.DeviceID)"
+    Write-Host "Vaba ruumi protsent: $vabaRuumi%"
+
+    # Kui vaba ruum on alla 50%, siis kuvame hoiatuse
+    if ($vabaRuumi -lt 50) {
+        Write-Host "Hakkab täis saama"
+    }
+    
+    Write-Host "*******************"
+}
