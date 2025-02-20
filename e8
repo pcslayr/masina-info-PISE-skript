@@ -1,6 +1,6 @@
 #Kasutusõpetus:
-#Skripti käivitamisel saad näha, kuidas iga funktsioon töötab oma sisendi ja väljundi puhul.
-#Näited käivitavad funktsioonid ja kuvavad tulemused otse ekraanil.
+#Funktsioon1 : Calculate-CircleArea -raadius 5
+#Funktsioon2 : Clean-PersonName -fullName '  jOhn dOe  '
 
 # Funktsioon 1: Arvutab ringi pindala etteantud raadiuse järgi
 function Calculate-CircleArea {
