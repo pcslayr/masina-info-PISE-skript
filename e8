@@ -27,13 +27,17 @@ function Clean-PersonName {
         [string]$fullName
     )
 
-    # Puhastame nime ülearustest tühikutest ja täpitähtedest
+    # Puhastame nime ülearustest tühikutest
     $cleanedName = $fullName.Trim()
-    $cleanedName = $cleanedName -replace '[^\w\s]', ''  # Eemaldame kõik mitte tähed ja tühikud
-    $cleanedName = $cleanedName -replace '\s+', ' '  # Asendame mitmed tühikud ühe tühikuga
+    
+    # Eemaldame kõik täpitähed ja erimärgid
+    $cleanedName = $cleanedName -replace '[^\w\s]', ''
 
-    # Teeme esitähed suurteks
-    $cleanedName = $cleanedName -replace '\b(\w)', { $args[0].Value.ToUpper() }
+    # Asendame mitmed tühikud ühe tühikuga
+    $cleanedName = $cleanedName -replace '\s+', ' '
+
+    # Teeme esitähed suurteks ja ülejäänud tähed väikesteks
+    $cleanedName = -join ($cleanedName.Split(' ') | ForEach-Object { $_.Substring(0,1).ToUpper() + $_.Substring(1).ToLower() })
 
     Write-Host "Puhastatud nimi: $cleanedName"
 }
