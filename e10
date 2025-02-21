@@ -4,12 +4,13 @@
 # Filtreeri välja kõik kliendid, kelle riik on Poola
 $poolasKliendid = $xml.customers.customer | Where-Object { $_.country -eq "Poland" }
 
-# Kuva tulemused
+# Kuva tulemused, lisades riigi
 $poolasKliendid | ForEach-Object {
     Write-Host "Full Name: $($_.full_name)"
     Write-Host "Street: $($_.street)"
     Write-Host "City: $($_.city)"
     Write-Host "Postal Code: $($_.postal_code)"
     Write-Host "Contact: $($_.contact)"
+    Write-Host "Country: $($_.country)"  # Kuvab riigi
     Write-Host "--------------------------"
 }
