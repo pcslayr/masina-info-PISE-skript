@@ -1,3 +1,6 @@
+#Kuidas kasutada:
+#Asenda "path_to_your_file.xml" oma XML faili täispikkusega tee (nt: "C:\Kliendid\klient.xml").
+
 # Lae sisse XML fail
 [xml]$xml = Get-Content "path_to_your_file.xml"
 
