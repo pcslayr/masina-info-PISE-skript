@@ -1,0 +1,15 @@
+# Lae sisse XML fail
+[xml]$xml = Get-Content "path_to_your_file.xml"
+
+# Filtreeri välja kõik kliendid, kelle riik on Poola
+$poolasKliendid = $xml.customers.customer | Where-Object { $_.country -eq "Poland" }
+
+# Kuva tulemused
+$poolasKliendid | ForEach-Object {
+    Write-Host "Full Name: $($_.full_name)"
+    Write-Host "Street: $($_.street)"
+    Write-Host "City: $($_.city)"
+    Write-Host "Postal Code: $($_.postal_code)"
+    Write-Host "Contact: $($_.contact)"
+    Write-Host "--------------------------"
+}
